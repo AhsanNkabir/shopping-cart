@@ -7,7 +7,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
-   <link href="style.css" rel="stylesheet">
+   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -87,7 +87,7 @@
 
          updateSpanText('currentPrice', 1219);
          updateSubTotal('subTotal', 1219);
-         updateGrandTotal('grandTotal', 1219);
+         // updateGrandTotal('grandTotal', 1219);
  
       })
 
@@ -95,13 +95,15 @@
 
       const removeProductBtn = document.getElementById('removePhone');
       removeProductBtn.addEventListener('click', function(){
-         const totalProduct = getProductNumber('productNumber') - 1;
-         document.getElementById('productNumber').value = totalProduct;
-
-         updateSpanText('currentPrice', -1*1219);
-         updateSubTotal('subTotal', -1*1219);
-         updateGrandTotal('grandTotal', -1*1219);
-
+         const totalProduct = getProductNumber('productNumber');
+         let totalNewProduct = totalProduct;
+         if(totalNewProduct > 0){
+            totalNewProduct = totalNewProduct - 1;
+            document.getElementById('productNumber').value = totalNewProduct;
+            updateSpanText('currentPrice', -1*1219);
+            updateSubTotal('subTotal', -1*1219);
+            // updateGrandTotal('grandTotal', -1*1219);
+         }
       })
 
       // Case Add Button Handler
@@ -113,7 +115,7 @@
 
          updateSpanText('currentCasePrice', 59);
          updateSubTotal('subTotal', 59);
-         updateGrandTotal('grandTotal', 59);
+         // updateGrandTotal('grandTotal', 59);
 
       })
 
@@ -121,13 +123,17 @@
 
       const removeCaseBtn = document.getElementById('removeCase');
       removeCaseBtn.addEventListener('click', function(){
-         const totalCase = getProductNumber('caseNumber') - 1;
-         document.getElementById('caseNumber').value = totalCase;
+         const totalCase = getProductNumber('caseNumber');
+         let totalNewCase = totalCase;
+         if(totalNewCase > 0){
+            const totalCase = getProductNumber('caseNumber') - 1;
+            document.getElementById('caseNumber').value = totalCase;
 
-         updateSpanText('currentCasePrice', -1*59);
-         updateSubTotal('subTotal', -1*59);
-         updateGrandTotal('grandTotal', -1*59);
-         
+            updateSpanText('currentCasePrice', -1*59);
+            updateSubTotal('subTotal', -1*59);
+            // updateGrandTotal('grandTotal', -1*59);
+
+         }  
       })
 
       //This function gives productNumber
@@ -160,15 +166,24 @@
          const grandSubTotal = subTotalNumber + number;
          document.getElementById(id).innerText = grandSubTotal;
 
+         const totalTax = Math.round(grandSubTotal * 0.05);
+         document.getElementById('tax').innerText = totalTax;
+
+         const total = grandSubTotal + totalTax;
+         document.getElementById('grandTotal').innerText = total;
+
+
       }
 
-      function updateGrandTotal(id, number){
-         const grandTotal = getProductPrice(id);
-          // const taxNumber = getProductPrice('tax');
-         const total = grandTotal + number;
-         document.getElementById(id).innerText = total;
+      // function updateGrandTotal(id, number){
+      //    const grandTotal = getProductPrice(id);
+         
+         // const totalTax = Math.round(getProductPrice('subTotal') * 0.05);
+         // document.getElementById('tax').innerText = totalTax;
+         // const total = grandTotal + number + totalTax;
+         // document.getElementById('grandTotal').innerText = total;
 
-      }
+      // }
 
    </script>
 </body>
